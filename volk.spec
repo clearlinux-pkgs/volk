@@ -4,7 +4,7 @@
 #
 Name     : volk
 Version  : 1.4
-Release  : 3
+Release  : 4
 URL      : https://github.com/gnuradio/volk/archive/v1.4.tar.gz
 Source0  : https://github.com/gnuradio/volk/archive/v1.4.tar.gz
 Summary  : VOLK: Vector Optimized Library of Kernels
