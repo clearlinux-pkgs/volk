@@ -4,7 +4,7 @@
 #
 Name     : volk
 Version  : 1.4
-Release  : 5
+Release  : 6
 URL      : https://github.com/gnuradio/volk/archive/v1.4.tar.gz
 Source0  : https://github.com/gnuradio/volk/archive/v1.4.tar.gz
 Summary  : VOLK: Vector Optimized Library of Kernels
@@ -27,9 +27,19 @@ BuildRequires : six
 BuildRequires : six-python3
 
 %description
-The volk_modtool tool is installed along with VOLK as a way of helping
-to construct, add to, and interogate the VOLK library or companion
-libraries.
+[![Build Status](https://travis-ci.org/gnuradio/volk.svg?branch=master)](https://travis-ci.org/gnuradio/volk)
+> This file is part of VOLK
+> VOLK is free software; you can redistribute it and/or modify
+> it under the terms of the GNU General Public License as published by
+> the Free Software Foundation; either version 3, or (at your option)
+> any later version.
+> VOLK is distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> GNU General Public License for more details.
+> You should have received a copy of the GNU General Public License
+> along with GNU Radio; see the file COPYING.  If not, write to
+> Boston, MA 02110-1301, USA.
 
 %package bin
 Summary: bin components for the volk package.
@@ -46,6 +56,7 @@ Group: Development
 Requires: volk-lib = %{version}-%{release}
 Requires: volk-bin = %{version}-%{release}
 Provides: volk-devel = %{version}-%{release}
+Requires: volk = %{version}-%{release}
 Requires: volk = %{version}-%{release}
 
 %description dev
@@ -89,32 +100,38 @@ python3 components for the volk package.
 
 %prep
 %setup -q -n volk-1.4
+cd %{_builddir}/volk-1.4
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1556836761
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1582905100
 mkdir -p clr-build
 pushd clr-build
-export LDFLAGS="${LDFLAGS} -fno-lto"
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake ..
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test
 
 %install
-export SOURCE_DATE_EPOCH=1556836761
+export SOURCE_DATE_EPOCH=1582905100
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/volk
-cp COPYING %{buildroot}/usr/share/package-licenses/volk/COPYING
+cp %{_builddir}/volk-1.4/COPYING %{buildroot}/usr/share/package-licenses/volk/8624bcdae55baeef00cd11d5dfcfa60f68710a02
 pushd clr-build
 %make_install
 popd
@@ -284,7 +301,7 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/volk/COPYING
+/usr/share/package-licenses/volk/8624bcdae55baeef00cd11d5dfcfa60f68710a02
 
 %files python
 %defattr(-,root,root,-)
