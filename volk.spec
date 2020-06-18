@@ -4,7 +4,7 @@
 #
 Name     : volk
 Version  : 1.4
-Release  : 7
+Release  : 8
 URL      : https://github.com/gnuradio/volk/archive/v1.4.tar.gz
 Source0  : https://github.com/gnuradio/volk/archive/v1.4.tar.gz
 Summary  : VOLK: Vector Optimized Library of Kernels
@@ -27,19 +27,9 @@ BuildRequires : six
 BuildRequires : six-python3
 
 %description
-[![Build Status](https://travis-ci.org/gnuradio/volk.svg?branch=master)](https://travis-ci.org/gnuradio/volk)
-> This file is part of VOLK
-> VOLK is free software; you can redistribute it and/or modify
-> it under the terms of the GNU General Public License as published by
-> the Free Software Foundation; either version 3, or (at your option)
-> any later version.
-> VOLK is distributed in the hope that it will be useful,
-> but WITHOUT ANY WARRANTY; without even the implied warranty of
-> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> GNU General Public License for more details.
-> You should have received a copy of the GNU General Public License
-> along with GNU Radio; see the file COPYING.  If not, write to
-> Boston, MA 02110-1301, USA.
+The volk_modtool tool is installed along with VOLK as a way of helping
+to construct, add to, and interogate the VOLK library or companion
+libraries.
 
 %package bin
 Summary: bin components for the volk package.
@@ -56,7 +46,6 @@ Group: Development
 Requires: volk-lib = %{version}-%{release}
 Requires: volk-bin = %{version}-%{release}
 Provides: volk-devel = %{version}-%{release}
-Requires: volk = %{version}-%{release}
 Requires: volk = %{version}-%{release}
 
 %description dev
@@ -107,14 +96,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582905100
+export SOURCE_DATE_EPOCH=1592461135
 mkdir -p clr-build
 pushd clr-build
-# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake ..
 make  %{?_smp_mflags}  VERBOSE=1
@@ -128,7 +116,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test
 
 %install
-export SOURCE_DATE_EPOCH=1582905100
+export SOURCE_DATE_EPOCH=1592461135
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/volk
 cp %{_builddir}/volk-1.4/COPYING %{buildroot}/usr/share/package-licenses/volk/8624bcdae55baeef00cd11d5dfcfa60f68710a02
