@@ -9,7 +9,7 @@
 #
 Name     : volk
 Version  : 3.1.2
-Release  : 1
+Release  : 2
 URL      : https://www.libvolk.org/releases/volk-3.1.2.tar.gz
 Source0  : https://www.libvolk.org/releases/volk-3.1.2.tar.gz
 Source1  : https://www.libvolk.org/releases/volk-3.1.2.tar.gz.asc
