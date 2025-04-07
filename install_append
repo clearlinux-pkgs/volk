@@ -1,0 +1,1 @@
+mv %{buildroot}/usr/lib64/cmake/volk/* %{buildroot}/usr/lib64/cmake/
